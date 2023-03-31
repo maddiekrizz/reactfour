@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/core/Autocomplete';
+import Button from '@material-ui/core/Button';
 
-function App() {
+const names = ['Apple', 'Banana', 'Cherry', 'Durian','Elderberry'];
+
+const GreetingForm = () => {
+  const [name, setName] = useState('');
+  const [favourite, setFavourite] = useState('');
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    alert(`Hello ${name}! Your favourite is ${favourite}.`);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <TextField
+          label="Name"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+        />
+      </div>
+      <div>
+        <Autocomplete
+          options={names}
+          getOptionLabel={(option) => option}
+          renderInput={(params) => <TextField {...params} label="Favourite" />}
+          value={favourite}
+          onChange={(value) => setFavourite(value)}
+        />
+      </div>
+      <Button type="submit" variant="contained" color="primary">
+        Submit
+      </Button>
+    </form>
   );
-}
+};
 
-export default App;
+export default GreetingForm;
